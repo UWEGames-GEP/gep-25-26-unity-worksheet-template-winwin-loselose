@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //gamestate enums, add more for other gamestates;;;;;; e.g slowtime
     public enum GameStates
     {
         GAMEPLAY,
         PAUSED
     }
     bool state_changing = false;
-    [SerializeField]GameStates state;
-    void Start()
-    { }
+    public GameStates state;
+
     private void LateUpdate()
     {
         stateManager();
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     void stateManager()
     {
+        //checks for player input, changes the state and then runs a bool to ensure the statechange doesnt loop
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             state = GameStates.PAUSED;
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
         }
         
     }
+
+    //gamestate voids, flexible!
     void gameplay()
     {
         Time.timeScale = 1.0f;

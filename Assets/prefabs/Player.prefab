@@ -281,6 +281,7 @@ MonoBehaviour:
   items: []
   game_manager: {fileID: 0}
   can_add_item: 0
+  inventory_slots: []
 --- !u!136 &4963709591294497538
 CapsuleCollider:
   m_ObjectHideFlags: 0

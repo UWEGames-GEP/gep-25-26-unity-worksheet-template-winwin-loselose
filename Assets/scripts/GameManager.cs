@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    
     //gamestate enums, add more for other gamestates;;;;;; e.g slowtime
     public enum GameStates
     {
         GAMEPLAY,
-        PAUSED
+        PAUSED,
+        INVENTORY
     }
     bool state_changing = false;
     public GameStates state;
-
     private void LateUpdate()
     {
         stateManager();
@@ -24,12 +25,17 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             state = GameStates.PAUSED;
-            state_changing = true;
+            state_changed();
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
             state = GameStates.GAMEPLAY;
-            state_changing = true;
+            state_changed();
+        }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            state = GameStates.INVENTORY;
+            state_changed();
         }
 
         if (state_changing)
@@ -43,18 +49,33 @@ public class GameManager : MonoBehaviour
                 case GameStates.PAUSED:
                     paused();
                     break;
+                case GameStates.INVENTORY:
+                    inventory();
+                    paused();
+                    break;
             }
         }
         
     }
-
+    public void state_changed()
+    {
+        state_changing = true;
+    }
     //gamestate voids, flexible!
     void gameplay()
     {
         Time.timeScale = 1.0f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     void paused()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0.0f;
+    }
+    void inventory()
+    {
+        //possibly add more here??????
     }
 }

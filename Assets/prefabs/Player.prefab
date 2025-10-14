@@ -278,9 +278,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9a3b91c43a46f4d8943530eabd8b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sylladex_item: {fileID: 5092156688513448692, guid: 541ad7358b2c97644a085f03294ea567, type: 3}
   items: []
   game_manager: {fileID: 0}
   can_add_item: 0
+  inventory_parent: {fileID: 0}
   inventory_slots: []
 --- !u!136 &4963709591294497538
 CapsuleCollider:

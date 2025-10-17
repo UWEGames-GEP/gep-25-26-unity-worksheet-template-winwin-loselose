@@ -40,7 +40,16 @@ public class Inventory : MonoBehaviour
         if (game_manager.state == GameStates.INVENTORY)
         {
             inventory_parent.SetActive(true);
-            can_add_item = false;
+            for (int i = 0; i < items.Count; i++)
+            {
+                //resets positions
+                if (inventory_slots[i].gameObject.transform.childCount > 0)
+                {
+                    inventory_slots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<Animation>().Stop();
+                    inventory_slots[i].gameObject.transform.GetChild(0).gameObject.transform.localPosition = new Vector2(0,0);
+                }
+
+            }
         }
         if (visual_timer > 0 && game_manager.state != GameStates.PAUSED)
         {
@@ -48,7 +57,7 @@ public class Inventory : MonoBehaviour
             visual_timer -= 1.0f * Time.deltaTime;
         }
             
-        else
+        else if(game_manager.state != GameStates.INVENTORY)
         {
             inventory_parent.SetActive(false);
             can_add_item = true;

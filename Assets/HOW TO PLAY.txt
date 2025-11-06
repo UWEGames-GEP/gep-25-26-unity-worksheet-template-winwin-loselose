@@ -1,0 +1,9 @@
+--=== + CONTROLS + ===--
+R: remove last item
+T: add item
+
+WASD, SPACE, MOUSE: movement
+
+E: show inventory + pause
+ESCAPE: menu + pause
+ENTER: unpause

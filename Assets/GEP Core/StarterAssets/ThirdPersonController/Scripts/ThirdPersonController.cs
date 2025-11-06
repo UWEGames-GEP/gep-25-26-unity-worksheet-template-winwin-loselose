@@ -14,6 +14,7 @@ namespace StarterAssets
 #endif
     public class ThirdPersonController : MonoBehaviour
     {
+        GameManager game_manager;
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -125,6 +126,9 @@ namespace StarterAssets
 
         private void Awake()
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            game_manager = GameObject.FindFirstObjectByType<GameManager>();
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -155,15 +159,21 @@ namespace StarterAssets
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
-
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+            //checks for game manager state if you can move
+            if(game_manager.state == GameManager.GameStates.GAMEPLAY)
+            {
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+            }
+            
         }
 
         private void LateUpdate()
         {
-            CameraRotation();
+            //checks game manager state for camera movement
+            if (game_manager.state == GameManager.GameStates.GAMEPLAY)
+                CameraRotation();
         }
 
         private void AssignAnimationIDs()

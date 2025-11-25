@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - inventory
   - p_menu
+  - inventory_objects_parent
   layers:
   - Default
   - TransparentFX

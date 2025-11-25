@@ -12,8 +12,13 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+        public bool addItem;
+        public bool removeItem;
+		public bool pause;
+		public bool _return;
+		public bool inventory;
 
-		[Header("Movement Settings")]
+        [Header("Movement Settings")]
 		public bool analogMovement;
 
 		[Header("Mouse Cursor Settings")]
@@ -39,7 +44,28 @@ namespace StarterAssets
 			JumpInput(value.isPressed);
 		}
 
-		public void OnSprint(InputValue value)
+        public void OnAddItem(InputValue value)
+        {
+            AddItemInput(value.isPressed);
+        }
+        public void OnRemoveItem(InputValue value)
+        {
+            RemoveItemInput(value.isPressed);
+        }
+        public void OnPause(InputValue value)
+        {
+            PauseInput(value.isPressed);
+        }
+        public void OnReturn(InputValue value)
+        {
+            ReturnInput(value.isPressed);
+        }
+        public void OnInventory(InputValue value)
+        {
+            InventoryInput(value.isPressed);
+        }
+
+        public void OnSprint(InputValue value)
 		{
 			SprintInput(value.isPressed);
 		}
@@ -61,7 +87,29 @@ namespace StarterAssets
 			jump = newJumpState;
 		}
 
-		public void SprintInput(bool newSprintState)
+		public void AddItemInput(bool newAddItemState)
+		{
+			addItem = newAddItemState;
+		}
+        public void RemoveItemInput(bool newRemoveItemState)
+        {
+            removeItem = newRemoveItemState;
+        }
+
+        public void PauseInput(bool newPauseState)
+        {
+            pause = newPauseState;
+        }
+        public void ReturnInput(bool newReturnState)
+        {
+            _return = newReturnState;
+        }
+        public void InventoryInput(bool newInventoryState)
+        {
+            inventory = newInventoryState;
+        }
+
+        public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
 		}

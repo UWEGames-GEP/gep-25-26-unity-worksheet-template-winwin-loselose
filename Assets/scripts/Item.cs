@@ -15,8 +15,11 @@ public class Item : MonoBehaviour
     {
         if (inventory != null && other.gameObject.CompareTag("Player"))
         {
-            inventory.addItem(this.name);
-            Destroy(this.gameObject);
+            inventory.addItem(this.gameObject);
+            //this.GetComponent<BoxCollider>().enabled = false;
+            this.gameObject.transform.position = new Vector3(0, -1000, 0);
+            this.gameObject.transform.SetParent(GameObject.FindWithTag("inventory_objects_parent").transform);
+            //Destroy(this.gameObject);
         }
     }
 }

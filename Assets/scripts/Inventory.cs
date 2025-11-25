@@ -13,6 +13,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] bool can_add_item = false;
     [SerializeField] GameObject inventory_parent;
     public List<GameObject> inventory_slots = new List<GameObject>();
+    public List<GameObject> slots_children = new List<GameObject>();
+
     GameObject to_destroy;
     float visual_timer = 1.6f;
     [SerializeField] StarterAssetsInputs _inputs;
@@ -88,20 +90,22 @@ public class Inventory : MonoBehaviour
     {
         if (can_add_item)
         {
+            sortItems();
             pickup_sfx.Play();
             visual_timer = 1.6f;
             items.Add(itemName);
             for (int i = 0; i < items.Count; i++)
             {
-                if (inventory_slots[i].gameObject.transform.childCount < 1)
-                {
-                    Instantiate(sylladex_item, inventory_slots[i].transform);
-                    Debug.Log("cum");
-                }
+                    if (inventory_slots[i].gameObject.transform.childCount < 1)
+                    {
+                        Instantiate(sylladex_item, inventory_slots[i].transform);
+                        slots_children.Add(inventory_slots[i].gameObject.transform.GetChild(0).gameObject);
+                        Debug.Log("cum");
+                    }
             }
         }
-        sortItems();
-    }
+        
+    }   
     public void removeItem(GameObject itemName)
     {
         if (can_add_item)
@@ -123,28 +127,26 @@ public class Inventory : MonoBehaviour
     {
         if (can_add_item)
         {
-            for (int i = items.Count; i > 0; i--)
-            {
-                if (inventory_slots[i].gameObject.transform.childCount > 0)
-                {
-                    Destroy(inventory_slots[i].gameObject.transform.GetChild(0).gameObject);
-                }
-                break;
-            }
             for (int i = 0; i < items.Count; i++)
             {
                 drop_sfx.Play();
                 if (items[i].gameObject != null)
                     items[i].transform.parent = null;
                 Debug.Log("did something?");
-                items[i].gameObject.transform.position = new Vector3(this.gameObject.transform.position.x +1, this.gameObject.transform.position.y + 1.5f, this.gameObject.transform.position.z + 1);
-                items.Remove(items.First ());
-                
+                items[i].gameObject.SetActive(true);
+                items[i].gameObject.transform.position = new Vector3(this.gameObject.transform.position.x + 1, this.gameObject.transform.position.y + 1.5f, this.gameObject.transform.position.z + 1);
+                items.Remove(items[i]);
                 break;
-            }
 
-            
+            }
+         
+            for (int i = 0; i < slots_children.Count; i++)
+            {
+                Destroy(slots_children[i].gameObject);
+                slots_children.Remove(slots_children[i]);
+            }
         }
+        
         sortItems();
     }
     public void sortItems()

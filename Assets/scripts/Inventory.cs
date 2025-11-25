@@ -5,23 +5,28 @@ using TMPro;
 using System.Linq;
 using Unity.VisualScripting;
 using StarterAssets;
+using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
-    [SerializeField]private GameObject sylladex_item;
-    public List<GameObject> items = new List<GameObject>();
+    
     [SerializeField] GameManager game_manager;
+
     [SerializeField] bool can_add_item = false;
     [SerializeField] GameObject inventory_parent;
+    [SerializeField] private GameObject sylladex_item;
+    public List<GameObject> items = new List<GameObject>();
     public List<GameObject> inventory_slots = new List<GameObject>();
     public List<GameObject> slots_children = new List<GameObject>();
 
     GameObject to_destroy;
     float visual_timer = 1.6f;
+
     [SerializeField] StarterAssetsInputs _inputs;
     [SerializeField] AudioSource pickup_sfx;
     [SerializeField] AudioSource drop_sfx;
-    //[SerializeField] GameObject[] inventory_slots;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    Quaternion newRotation;
+    Vector3 newPosition;
     private void Start()
     {
         //finds the game manager in the scene
@@ -32,8 +37,6 @@ public class Inventory : MonoBehaviour
         inventory_parent = GameObject.FindGameObjectWithTag("inventory");
         for (int i = 0; i < inventory_parent.transform.childCount; i++)
             inventory_slots.Add(inventory_parent.transform.GetChild(i).gameObject);
-        //inventory_slots = GameObject.FindGameObjectsWithTag("inventory");
-        //sortItems();
     }
     private void LateUpdate()
     {
@@ -49,7 +52,7 @@ public class Inventory : MonoBehaviour
             inventory_parent.SetActive(true);
             for (int i = 0; i < items.Count; i++)
             {
-                //resets positions
+                //resets positions of the ui
                 if (inventory_slots[i].gameObject.transform.childCount > 0)
                 {
                     inventory_slots[i].gameObject.transform.GetChild(0).gameObject.GetComponent<Animation>().Stop();
@@ -70,13 +73,6 @@ public class Inventory : MonoBehaviour
             can_add_item = true;
         }
 
-        //input test for adding items!
-        //if (_inputs.addItem)
-        //{
-        //    addItem("fuck");
-        //    _inputs.addItem = false;
-        //}
-
         if(_inputs.removeItem)
         {
             removeItems();
@@ -86,37 +82,61 @@ public class Inventory : MonoBehaviour
     }
 
     //voids for adding and removing items to be accessed by other scripts
-    public void addItem(GameObject itemName)
+    public void addItem(GameObject itemObj, string item_name)
     {
         if (can_add_item)
         {
-            sortItems();
+            //adds visuals, palys sounds
             pickup_sfx.Play();
             visual_timer = 1.6f;
-            items.Add(itemName);
+            items.Add(itemObj);
             for (int i = 0; i < items.Count; i++)
             {
+                    
                     if (inventory_slots[i].gameObject.transform.childCount < 1)
                     {
+                        //instantiates the ui elements under their respective slots to have animations and the like
                         Instantiate(sylladex_item, inventory_slots[i].transform);
                         slots_children.Add(inventory_slots[i].gameObject.transform.GetChild(0).gameObject);
-                        Debug.Log("cum");
+
+                        //sets the colour of the grist visual in the ui based on the name it was given
+                        switch (item_name)
+                        {
+                            case "red_grist":
+                                inventory_slots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().color = Color.red;
+                                break;
+                            case "orange_grist":
+                                inventory_slots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().color = Color.orange;
+                                break;
+                            case "green_grist":
+                                inventory_slots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().color = Color.green;
+                                break;
+                        }
                     }
             }
         }
         
     }   
+    void spawnInfrontOfPlayer()
+    {
+        //grabs the position infront of the player
+        Vector3 currentWorldPosition = transform.position;
+        Vector3 forward = transform.forward;
+
+        //randomizer on all axis, allowing for slightly better feeling gameplay
+        Vector3 randomization = new Vector3(Random.Range(0.0f, 0.5f), Random.Range(0.0f, 0.5f), Random.Range(0.0f, 0.5f));
+
+        //combines all
+        newPosition = (currentWorldPosition + randomization) + forward;
+        newPosition += new Vector3(0, 0.5f, 0);
+
+        //grabs the current rotation of the player, to let us use it int he future for spawning infront of the player based on its rotaiton
+        Quaternion currentRotation = transform.rotation;
+        newRotation = currentRotation * Quaternion.Euler(0, 0, 180);
+    }
     public void removeItems()
     {
-        Vector3 currentWorldPosition = transform.position;
-        Vector3 forward = transform.forward * 1.2f;
-
-        Vector3 newPosition = currentWorldPosition + forward;
-        newPosition += new Vector3(0, 1, 0);
-
-        Quaternion currentRotation = transform.rotation;
-        Quaternion newRotation = currentRotation * Quaternion.Euler(0, 0, 180);
-
+        spawnInfrontOfPlayer();
         if (can_add_item)
         {
             for (int i = 0; i < items.Count; i++)
@@ -124,9 +144,9 @@ public class Inventory : MonoBehaviour
                 drop_sfx.Play();
                 if (items[i].gameObject != null)
                     items[i].transform.parent = null;
-                Debug.Log("did something?");
+                
+                //sets item visible and "spawns" it infront of the player once more
                 items[i].gameObject.SetActive(true);
-                //items[i].gameObject.transform.position = new Vector3(this.gameObject.transform.position.x + 1, this.gameObject.transform.position.y + 1.5f, this.gameObject.transform.position.z + 1);
                 items[i].transform.position = newPosition;
                 items[i].transform.rotation = newRotation;
                 items.Remove(items[i]);
@@ -136,6 +156,7 @@ public class Inventory : MonoBehaviour
          
             for (int i = 0; i < slots_children.Count; i++)
             {
+                //removes the ui visual elements
                 Destroy(slots_children[i].gameObject);
                 slots_children.Remove(slots_children[i]);
             }
@@ -143,14 +164,27 @@ public class Inventory : MonoBehaviour
         
         sortItems();
     }
+    public void removeSelectedItem(int itemToRemove)
+    {
+        spawnInfrontOfPlayer();
+        //checks for one clicked in list
+        //finds association of object to that button
+        //removes that one from list
+
+        if (items[itemToRemove].gameObject != null)
+            items[itemToRemove].transform.parent = null;
+
+        items[itemToRemove].gameObject.SetActive(true);
+        items[itemToRemove].transform.position = newPosition;
+        items[itemToRemove].transform.rotation = newRotation;   
+        items.Remove(items[itemToRemove]);
+        Destroy(slots_children[itemToRemove].gameObject);
+        slots_children.Remove(slots_children[itemToRemove]);
+        
+        sortItems();
+    }
     public void sortItems()
     {
         items.Sort();
-        //set inventory text
-        /*for (int i = 0; i < items.Count; i++)
-        {
-            inventory_slots[i].GetComponent<TMP_Text>().SetText(items[i].ToString());
-            grabs the inventory slot, checks if it has a child, if not, spawns a new sylladex item onto it.     
-        }*/
     }
 }

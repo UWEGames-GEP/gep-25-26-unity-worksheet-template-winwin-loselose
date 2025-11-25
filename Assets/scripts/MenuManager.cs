@@ -5,7 +5,6 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameManager game_manager;
     [SerializeField] GameObject pause_menu;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //finds the game manager in the scene
@@ -13,9 +12,9 @@ public class MenuManager : MonoBehaviour
         pause_menu = GameObject.FindWithTag("p_menu");
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //checks if youre paused or not to show the menu
         if (game_manager.state == GameStates.PAUSED)
             pause_menu.SetActive(true);
         else

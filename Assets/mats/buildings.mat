@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2a3daea46c599324e873f935ab08000a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -140,7 +140,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _AmbientLight: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 0}
+    - _AmbientLight: {r: 0.475, g: 0.475, b: 0.475, a: 0}
     - _BaseColor: {r: 0.5849056, g: 0.5586141, b: 0.51041293, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeHighlightColor: {r: 0.57547164, g: 0.57547164, b: 0.57547164, a: 0.3882353}

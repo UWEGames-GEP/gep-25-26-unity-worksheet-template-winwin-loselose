@@ -79,7 +79,7 @@ public class Inventory : MonoBehaviour
 
         if(_inputs.removeItem)
         {
-            removeLastItemDebug();
+            removeItems();
             _inputs.removeItem = false;
         }
 
@@ -106,25 +106,17 @@ public class Inventory : MonoBehaviour
         }
         
     }   
-    public void removeItem(GameObject itemName)
+    public void removeItems()
     {
-        if (can_add_item)
-        {
-            items.Remove(itemName);
-            for (int i = 0; i < items.Count; i++)
-            {
-                //items.Remove(itemName);
-                if (inventory_slots[i].gameObject.transform.childCount > 0)
-                {
-                   // Destroy(inventory_slots[i].gameObject.transform.GetChild(0).gameObject);
-                }
-            }
-                
-        }
-        sortItems();
-    }
-    public void removeLastItemDebug()
-    {
+        Vector3 currentWorldPosition = transform.position;
+        Vector3 forward = transform.forward * 1.2f;
+
+        Vector3 newPosition = currentWorldPosition + forward;
+        newPosition += new Vector3(0, 1, 0);
+
+        Quaternion currentRotation = transform.rotation;
+        Quaternion newRotation = currentRotation * Quaternion.Euler(0, 0, 180);
+
         if (can_add_item)
         {
             for (int i = 0; i < items.Count; i++)
@@ -134,7 +126,9 @@ public class Inventory : MonoBehaviour
                     items[i].transform.parent = null;
                 Debug.Log("did something?");
                 items[i].gameObject.SetActive(true);
-                items[i].gameObject.transform.position = new Vector3(this.gameObject.transform.position.x + 1, this.gameObject.transform.position.y + 1.5f, this.gameObject.transform.position.z + 1);
+                //items[i].gameObject.transform.position = new Vector3(this.gameObject.transform.position.x + 1, this.gameObject.transform.position.y + 1.5f, this.gameObject.transform.position.z + 1);
+                items[i].transform.position = newPosition;
+                items[i].transform.rotation = newRotation;
                 items.Remove(items[i]);
                 break;
 

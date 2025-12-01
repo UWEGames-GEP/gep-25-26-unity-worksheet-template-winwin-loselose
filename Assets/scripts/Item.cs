@@ -18,7 +18,6 @@ public class Item : MonoBehaviour
         if (inventory != null && other.gameObject.CompareTag("Player"))
         {
             inventory.addItem(this.gameObject, obj_name);
-            this.gameObject.SetActive(false);
         }
     }
 }

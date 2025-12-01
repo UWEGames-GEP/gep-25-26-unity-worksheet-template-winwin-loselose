@@ -86,13 +86,15 @@ public class Inventory : MonoBehaviour
     {
         if (can_add_item)
         {
-            //adds visuals, palys sounds
-            pickup_sfx.Play();
-            visual_timer = 1.6f;
-            items.Add(itemObj);
-            for (int i = 0; i < items.Count; i++)
+            if (items.Count < 6)
             {
-                    
+                itemObj.gameObject.SetActive(false);
+                //adds visuals, palys sounds
+                pickup_sfx.Play();
+                visual_timer = 1.6f;
+                items.Add(itemObj);
+                for (int i = 0; i < items.Count; i++)
+                {
                     if (inventory_slots[i].gameObject.transform.childCount < 1)
                     {
                         //instantiates the ui elements under their respective slots to have animations and the like
@@ -113,9 +115,9 @@ public class Inventory : MonoBehaviour
                                 break;
                         }
                     }
-            }
+                }
+            } 
         }
-        
     }   
     void spawnInfrontOfPlayer()
     {

@@ -17,8 +17,12 @@ public class Item : MonoBehaviour
     {
         if (inventory != null && other.gameObject.CompareTag("Player"))
         {
-            inventory.addItem(this.gameObject, obj_name);
-            this.gameObject.SetActive(false);
+            if(inventory.items.Count < inventory.inventory_slots.Count) // checks for the max amount of inventory slots
+            {
+                inventory.addItem(this.gameObject, obj_name);
+                this.gameObject.SetActive(false);
+            }
+            
         }
     }
 }

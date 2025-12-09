@@ -167,6 +167,7 @@ public class Inventory : MonoBehaviour
     public void removeSelectedItem(int itemToRemove)
     {
         spawnInfrontOfPlayer();
+        drop_sfx.Play();
         //checks for one clicked in list
         //finds association of object to that button
         //removes that one from list

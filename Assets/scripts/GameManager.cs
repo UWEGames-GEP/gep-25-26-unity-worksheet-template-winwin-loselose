@@ -1,10 +1,12 @@
+using StarterAssets;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+
+    [SerializeField] StarterAssetsInputs _inputs;
     //gamestate enums, add more for other gamestates;;;;;; e.g slowtime
     public enum GameStates
     {
@@ -22,20 +24,23 @@ public class GameManager : MonoBehaviour
     void stateManager()
     {
         //checks for player input, changes the state and then runs a bool to ensure the statechange doesnt loop
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (_inputs.pause)
         {
             state = GameStates.PAUSED;
             state_changed();
+            _inputs.pause = false;
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (_inputs._return)
         {
             state = GameStates.GAMEPLAY;
             state_changed();
+            _inputs._return = false;
         }
-        if(Input.GetKeyDown(KeyCode.E))
+        if(_inputs.inventory)
         {
             state = GameStates.INVENTORY;
             state_changed();
+            _inputs.inventory = false; 
         }
 
         if (state_changing)

@@ -22,7 +22,7 @@ public class Item : MonoBehaviour
                 inventory.addItem(this.gameObject, obj_name);
                 this.gameObject.SetActive(false);
             }
-            
+
         }
     }
 }

@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.32002014, y: 0.32002014, z: 0.32002014}
+  m_LocalScale: {x: 0.3356983, y: 0.3356983, z: 0.3356983}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8049099807149031426}
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  obj_name: green_grist
+  obj_name: orange_grist
 --- !u!54 &5362983826077649358
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -185,7 +185,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f47b5d255e295cb47b84d298216e9e34, type: 2}
+  - {fileID: 2100000, guid: c1e8558bea0e0e142b6f3d989a238240, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

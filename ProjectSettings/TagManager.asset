@@ -8,6 +8,7 @@ TagManager:
   - inventory
   - p_menu
   - inventory_objects_parent
+  - game_manager
   layers:
   - Default
   - TransparentFX

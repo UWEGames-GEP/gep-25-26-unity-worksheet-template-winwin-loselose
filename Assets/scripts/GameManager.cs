@@ -6,16 +6,19 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] StarterAssetsInputs _inputs;
-    //gamestate enums, add more for other gamestates;;;;;; e.g slowtime
+    [SerializeField] private StarterAssetsInputs _inputs;
+
+    public AudioSource pickup_sfx;
+    public AudioSource drop_sfx;
     public enum GameStates
     {
         GAMEPLAY,
         PAUSED,
         INVENTORY
     }
-    bool state_changing = false;
     public GameStates state;
+    private bool state_changing = false;
+
     private void LateUpdate()
     {
         stateManager();
@@ -23,30 +26,31 @@ public class GameManager : MonoBehaviour
 
     void stateManager()
     {
-        //checks for player input, changes the state and then runs a bool to ensure the statechange doesnt loop
         if (_inputs.pause)
         {
             state = GameStates.PAUSED;
             state_changed();
             _inputs.pause = false;
         }
+
         if (_inputs._return)
         {
             state = GameStates.GAMEPLAY;
             state_changed();
             _inputs._return = false;
         }
-        if(_inputs.inventory)
+
+        if (_inputs.inventory)
         {
             state = GameStates.INVENTORY;
             state_changed();
-            _inputs.inventory = false; 
+            _inputs.inventory = false;
         }
 
         if (state_changing)
         {
             state_changing = false;
-            switch(state)
+            switch (state)
             {
                 case GameStates.GAMEPLAY:
                     gameplay();
@@ -60,27 +64,31 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
-        
     }
+
     public void state_changed()
     {
         state_changing = true;
     }
-    //gamestate voids, flexible!
+
     void gameplay()
     {
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
     }
+
     void paused()
+    {
+        Time.timeScale = 0.0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    void inventory()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Time.timeScale = 0.0f;
-    }
-    void inventory()
-    {
-        //possibly add more here??????
     }
 }

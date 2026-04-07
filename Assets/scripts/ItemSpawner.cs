@@ -18,13 +18,10 @@ public class ItemSpawner : MonoBehaviour
         }
         else
         {
-            //instantiate the prefab onto the spawner, set a randomizer for the colour and size for "random" items
             Instantiate(prefab_to_spawn, this.transform);
             int colour = Random.Range(0, 3);
-            float size = Random.Range(0.2f, 0.6f);
+            float size = Random.Range(0.2f, 0.35f);
             prefab_to_spawn.gameObject.transform.localScale = new Vector3(size, size, size);
-            //grab the material on the item and change its colour to the set materials in the inspector
-            //setting the "name" to associate the item for dropping and visuals
             switch (colour)
             {
                 case 0:

@@ -27,7 +27,7 @@ public class MenuManager : MonoBehaviour
     }
     public void options()
     {
-
+        //idk what to put here given everything, maybe in future if i have time?
     }
     public void quit()
     {

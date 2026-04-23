@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7686867909100067090}
   - component: {fileID: 6633942548387077476}
-  - component: {fileID: -3350061396597339987}
   - component: {fileID: 5362983826077649358}
   - component: {fileID: 2273200335321035782}
+  - component: {fileID: 7052749631107402848}
   m_Layer: 0
-  m_Name: TestItem
+  m_Name: Grist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.20443392, y: 0.20443392, z: 0.20443392}
+  m_LocalScale: {x: 0.3026318, y: 0.3026318, z: 0.3026318}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8049099807149031426}
@@ -55,22 +55,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.12, y: 1.15, z: 1.21}
+  m_Size: {x: 1.3, y: 1.3, z: 1.3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-3350061396597339987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5753780791210908370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91759724e1e5cb64c9f4892657c416d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  obj_name: orange_grist
 --- !u!54 &5362983826077649358
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,6 +107,20 @@ CapsuleCollider:
   m_Height: 1.47
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7052749631107402848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753780791210908370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df6d5fb5ba0c8640aba258dd92b8e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  value: 0
 --- !u!1 &7277804956696500920
 GameObject:
   m_ObjectHideFlags: 0

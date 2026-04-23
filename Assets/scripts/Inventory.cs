@@ -32,6 +32,8 @@ public class Inventory : MonoBehaviour
     public Transform item_holder;
     public GameObject held_item;
 
+    public Sprite katana, cal, seb;
+
     void Start()
     {
         game_manager = GameObject.FindWithTag("game_manager").GetComponent<GameManager>();
@@ -63,7 +65,7 @@ public class Inventory : MonoBehaviour
             if (inventory_slots[check_num].transform.childCount > 0)
             {
                 Animation anim = inventory_slots[check_num].transform.GetChild(0).GetComponent<Animation>();
-                if (anim != null)
+                    if (anim != null)
                 {
                     anim.Stop();
                     anim.Play("item_pop_in");
@@ -76,7 +78,6 @@ public class Inventory : MonoBehaviour
                 held_item.GetComponent<BoxCollider>().enabled = false;
                 held_item.GetComponent<Rigidbody>().isKinematic = true;
                 held_item.transform.SetParent(item_holder);
-                held_item.transform.position = held_item.transform.parent.position;
 
                 is_selected_card_empty = false;
             }
@@ -104,6 +105,9 @@ public class Inventory : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F)) 
             remove_held_item();
+
+        if(held_item != null)
+            held_item.transform.position = item_holder.transform.position;
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -173,12 +177,12 @@ public class Inventory : MonoBehaviour
                 btnScript.index = i;
             }
 
-            if (item_node.GetComponent<Item>().obj_name == "red_grist")
-                instance.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-            if (item_node.GetComponent<Item>().obj_name == "green_grist")
-                instance.transform.GetChild(0).GetComponent<Image>().color = Color.green;
-            if (item_node.GetComponent<Item>().obj_name == "orange_grist")
-                instance.transform.GetChild(0).GetComponent<Image>().color = Color.orange;
+            if (item_node.GetComponent<Item>().obj_name == "katana")
+                instance.transform.GetChild(0).GetComponent<Image>().sprite = katana;
+            if (item_node.GetComponent<Item>().obj_name == "seb")
+                instance.transform.GetChild(0).GetComponent<Image>().sprite = seb;
+            if (item_node.GetComponent<Item>().obj_name == "cal")
+                instance.transform.GetChild(0).GetComponent<Image>().sprite = cal;
             slots_children.Add(instance);
             
         }
@@ -217,10 +221,11 @@ public class Inventory : MonoBehaviour
 
     public void remove_held_item()
     {
-        if (can_add_item && selected_card != null && items.Count > selected_card)
+        if (can_add_item && items.Count > selected_card)
         {
+            Time.timeScale = 0.0f;
             spawnInFrontOfPlayer();
-            GameObject item_to_remove = items[(int)selected_card];
+            GameObject item_to_remove = items[selected_card];
 
             item_to_remove.SetActive(true);
             item_to_remove.transform.SetParent(null); // root
@@ -229,8 +234,10 @@ public class Inventory : MonoBehaviour
 
             object_unfreeze(item_to_remove);
             item_to_remove.transform.position = newPosition;
-            items.RemoveAt((int)selected_card);
+            items.RemoveAt(selected_card);
+            held_item = null;
             ui_fix();
+            Time.timeScale = 1.0f;
         }
     }
 
